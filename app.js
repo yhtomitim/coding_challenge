@@ -61,7 +61,6 @@ function isThreeOfAKind(obj) {
     });
   });
   return doesExist;
-  // console.log(`three of a kind: ${handIsThreeOfAKind}`);
 }
 
 function isAStraight(obj) {
@@ -73,8 +72,6 @@ function isAStraight(obj) {
     rankString += cardRank;
   });
   if (rankString.length === 5 || rankString.length === 6) {
-
-    // need to fix regex when dealing with 10
     const sixHigh = /23456/;
     const sevenHigh = /34567/;
     const eightHigh = /45678/;
@@ -142,9 +139,6 @@ function isAFlush(obj) {
 
 function isFullHouse(pair, threeKind) {
   let doesExist = false;
-  // console.log(`initial value of doesExist: ${doesExist}`);
-  // console.log(`pair in funct: ${pair}`);
-  // console.log(`three in funct: ${threeKind}`);
   if (pair === true && threeKind === true) {
     doesExist = true;
   }
@@ -181,14 +175,16 @@ function isRoyalFlush(straightFlush, straightKind) {
 
 function evaluatePokerHand(hand) {
   const reducedHand = hand.reduce((object, currentCard) => {
-    if (!object[currentCard.slice(0, currentCard.length - 1)]) {
-      object[currentCard.slice(0, currentCard.length - 1)] = {
+    const cardRankOnly = currentCard.slice(0, currentCard.length - 1);
+    const cardSuit = currentCard.slice(-1)
+    if (!object[cardRankOnly]) {
+      object[cardRankOnly] = {
         count: 1,
-        suit: currentCard.slice(-1)
+        suit: cardSuit
       };
     } else {
-      object[currentCard.slice(0, currentCard.length - 1)].count++;
-      object[currentCard.slice(0, currentCard.length - 1)].suit += currentCard.slice(-1);
+      object[cardRankOnly].count++;
+      object[cardRankOnly].suit += cardSuit;
     }
     return object;
   }, {});
