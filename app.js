@@ -20,10 +20,13 @@ Hand: Kh Qh 6 h 2 h 9 h(Flush)
 module.exports = evaluatePokerHand;
 
 const helperFn = require('./helperFunctions');
-// const hand = ['Qs', 'Js', 'As', '10s', 'Ks', 'As'];
-const hand = ['9s', 'Qs', '8s', '10s', 'Js'];
-const displayHand = evaluatePokerHand(hand);
-console.log(displayHand);
+
+// commented out evaluatePokerHand invocation to remove console.log statement in tests. Uncomment ln 26-29 to use `node app.js` to view the hand type in terminal. two const hand declarations on ln 26 and 27 for ease of seeing the results change.
+
+// // const hand = ['Qs', 'Js', 'As', '10s', 'Ks', 'As'];
+// const hand = ['9s', 'Qs', '8s', '10s', 'Js'];
+// const displayHand = evaluatePokerHand(hand);
+// console.log(displayHand);
 
 function evaluatePokerHand(hand) {
   const handHasDuplicateCards = helperFn.findDuplicateCards(hand);
