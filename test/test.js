@@ -7,6 +7,14 @@ describe('Poker Hand Evaluator', () => {
     assert.isArray(hand, true);
     assert.lengthOf(hand, 5);
   });
+  it('Displays a message if too many cards in array', () => {
+    const hand = ['Qs', 'Js', 'As', '10s', 'Ks'];
+    assert.deepEqual(application(hand), 'too many cards, can only have 5');
+  });
+  it('Displays a message if there are duplicate cards in array', () => {
+    const hand = ['Qs', 'Js', 'As', '10s', 'Ks'];
+    assert.deepEqual(application(hand), 'please remove duplicate card from array');
+  });
   it('Displays high hand message', () => {
     const hand = ['10c', 'Ad', '2h', '4s', '5d'];
     assert.deepEqual(application(hand), 'You have a High Card hand');
@@ -43,9 +51,8 @@ describe('Poker Hand Evaluator', () => {
     const hand = ['5c', '9c', '7c', '6c', '8c'];
     assert.deepEqual(application(hand), 'You have a Straight Flush');
   });
-   it('Displays royal flush hand message', () => {
-     const hand = ['Qs', 'Js', 'As', '10s', 'Ks'];
-     assert.deepEqual(application(hand), 'You have a Royal Flush');
-   });
-
+  it('Displays royal flush hand message', () => {
+    const hand = ['Qs', 'Js', 'As', '10s', 'Ks'];
+    assert.deepEqual(application(hand), 'You have a Royal Flush');
+  });
 });
