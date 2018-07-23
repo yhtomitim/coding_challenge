@@ -176,7 +176,7 @@ function isRoyalFlush(straightFlush, straightKind) {
 function evaluatePokerHand(hand) {
   const reducedHand = hand.reduce((object, currentCard) => {
     const cardRankOnly = currentCard.slice(0, currentCard.length - 1);
-    const cardSuit = currentCard.slice(-1);
+    const cardSuit = currentCard.slice(-1)
     if (!object[cardRankOnly]) {
       object[cardRankOnly] = {
         count: 1,
@@ -299,6 +299,6 @@ function evaluatePokerHand(hand) {
     console.log('You have a Pair');
   }
   if (highCardHand === true) {
-    console.log('You have a high card hand');
+    console.log('You have a High Card hand');
   }
 }
