@@ -19,185 +19,15 @@ Hand: Kh Qh 6 h 2 h 9 h(Flush)
 */
 module.exports = evaluatePokerHand;
 
-// const hand = ['Qs', 'Js', 'As', 'Ks', 'Ks'];
-// // const hand = ['9s', 'Qs', '8s', '10s', 'Js'];
-// evaluatePokerHand(hand);
-
-function isAPair(obj) {
-  let doesExist = false;
-  let counter = 0;
-  Object.keys(obj).forEach(cardRank => {
-    Object.values(obj[cardRank]).forEach(value => {
-      if (value === 2) {
-        counter++;
-      }
-    });
-    if (counter === 1) {
-      doesExist = true;
-    }
-  });
-  return doesExist;
-}
-
-function isTwoPair(obj) {
-  let doesExist = false;
-  let counter = 0;
-  Object.keys(obj).forEach(cardRank => {
-    Object.values(obj[cardRank]).forEach(value => {
-      if (value === 2) {
-        counter++;
-      }
-    });
-    if (counter === 2) {
-      doesExist = true;
-    }
-  });
-  return doesExist;
-}
-
-function isThreeOfAKind(obj) {
-  let doesExist = false;
-  Object.keys(obj).forEach(cardRank => {
-    Object.values(obj[cardRank]).forEach(value => {
-      if (value === 3) {
-        doesExist = true;
-      }
-    });
-  });
-  return doesExist;
-}
-
-function isAStraight(obj) {
-  let doesExist = false;
-  let rankString = '';
-  let straightHighRank = '';
-
-  Object.keys(obj).forEach(cardRank => {
-    rankString += cardRank;
-  });
-  if (rankString.length === 5 || rankString.length === 6) {
-    const sixHigh = /23456/;
-    const sevenHigh = /34567/;
-    const eightHigh = /45678/;
-    const nineHigh = /56789/;
-    const tenHigh = /678910/;
-    const jackHigh = /78910J/;
-    const queenHigh = /8910[JQ][QJ]/;
-    const kingHigh = /910[JQK][JQK][JQK]/;
-    const aceHigh = /10[QJKA][JQKA][JKQA][JQKA]/;
-
-    if (sixHigh.test(rankString)) {
-      doesExist = true;
-      straightHighRank = '6';
-    }
-    if (sevenHigh.test(rankString)) {
-      doesExist = true;
-      straightHighRank = '7';
-    }
-    if (eightHigh.test(rankString)) {
-      doesExist = true;
-      straightHighRank = '8';
-    }
-    if (nineHigh.test(rankString)) {
-      doesExist = true;
-      straightHighRank = '9';
-    }
-    if (tenHigh.test(rankString)) {
-      doesExist = true;
-      straightHighRank = '10';
-    }
-    if (jackHigh.test(rankString)) {
-      doesExist = true;
-      straightHighRank = 'J';
-    }
-    if (queenHigh.test(rankString)) {
-      doesExist = true;
-      straightHighRank = 'Q';
-    }
-    if (kingHigh.test(rankString)) {
-      doesExist = true;
-      straightHighRank = 'K';
-    }
-    if (aceHigh.test(rankString)) {
-      doesExist = true;
-      straightHighRank = 'A';
-    }
-  }
-  return [doesExist, straightHighRank];
-}
-
-function isAFlush(obj) {
-  let doesExist = false;
-  let handSuit = '';
-  Object.keys(obj).forEach(cardRank => {
-    Object.values(obj[cardRank]).forEach(value => {
-      if (value === 's' || value === 'd' || value === 'c' || value === 'h') {
-        handSuit += value;
-      }
-    });
-    if (handSuit === 'sssss' || handSuit === 'ddddd' || handSuit === 'ccccc' || handSuit === 'hhhhh')
-      doesExist = true;
-  });
-  return doesExist;
-}
-
-function isFullHouse(pair, threeKind) {
-  let doesExist = false;
-  if (pair === true && threeKind === true) {
-    doesExist = true;
-  }
-  return doesExist;
-}
-
-function isFourOfAKind(obj) {
-  let doesExist = false;
-  Object.keys(obj).forEach(cardRank => {
-    Object.values(obj[cardRank]).forEach(value => {
-      if (value === 4) {
-        doesExist = true;
-      }
-    });
-  });
-  return doesExist;
-}
-
-function isStraightFlush(straight, flush) {
-  let doesExist = false;
-  if (straight === true && flush === true) {
-    doesExist = true;
-  }
-  return doesExist;
-}
-
-function isRoyalFlush(straightFlush, straightKind) {
-  let doesExist = false;
-  if (straightFlush === true && straightKind === 'A') {
-    doesExist = true;
-  }
-  return doesExist;
-}
-function findDuplicateCards(hand) {
-  let doesExist = false;
-  let anyDuplicates = hand.filter((card, index, self) => {
-    return index !== self.indexOf(card);
-  });
-    if (anyDuplicates.length !== 0) {
-      doesExist = true;
-    }
-  return doesExist;
-}
-
-function checkNumberOfCards(hand) {
-  let tooManyCards = false;
-  if (hand.length !== 5) {
-    tooManyCards = true;
-  }
-  return tooManyCards;
-}
+const helperFn = require('./helperFunctions');
+// const hand = ['Qs', 'Js', 'As', '10s', 'Ks', 'As'];
+const hand = ['9s', 'Qs', '8s', '10s', 'Js'];
+const displayHand = evaluatePokerHand(hand);
+console.log(displayHand);
 
 function evaluatePokerHand(hand) {
-  const handHasDuplicateCards = findDuplicateCards(hand);
-  const handHasExtraCards = checkNumberOfCards(hand);
+  const handHasDuplicateCards = helperFn.findDuplicateCards(hand);
+  const handHasExtraCards     = helperFn.checkNumberOfCards(hand);
 
   const reducedHand = hand.reduce((object, currentCard) => {
     const cardRankOnly = currentCard.slice(0, currentCard.length - 1);
@@ -214,119 +44,117 @@ function evaluatePokerHand(hand) {
     return object;
   }, {});
 
-  const handIsPair = isAPair(reducedHand);
-  const handIsTwoPair = isTwoPair(reducedHand);
-  const handIsThreeOfAKind = isThreeOfAKind(reducedHand);
-  const handIsStraight = isAStraight(reducedHand)[0];
-  const straightHigh = isAStraight(reducedHand)[1];
-  const handIsFlush = isAFlush(reducedHand);
-  const handIsFullHouse = isFullHouse(handIsPair, handIsThreeOfAKind);
-  const handIsFourOfAKind = isFourOfAKind(reducedHand);
-  const handIsStraightFlush = isStraightFlush(handIsStraight, handIsFlush);
-  const handIsRoyalFlush = isRoyalFlush(handIsStraightFlush, straightHigh);
+  const handIsPair          = helperFn.isAPair(reducedHand);
+  const handIsTwoPair       = helperFn.isTwoPair(reducedHand);
+  const handIsThreeOfAKind  = helperFn.isThreeOfAKind(reducedHand);
+  const handIsStraight      = helperFn.isAStraight(reducedHand)[0];
+  const straightHigh        = helperFn.isAStraight(reducedHand)[1];
+  const handIsFlush         = helperFn.isAFlush(reducedHand);
+  const handIsFullHouse     = helperFn.isFullHouse(handIsPair, handIsThreeOfAKind);
+  const handIsFourOfAKind   = helperFn.isFourOfAKind(reducedHand);
+  const handIsStraightFlush = helperFn.isStraightFlush(handIsStraight, handIsFlush);
+  const handIsRoyalFlush    = helperFn.isRoyalFlush(handIsStraightFlush, straightHigh);
 
   const checkForStraightFlush =
     handIsStraightFlush === true &&
-    handIsRoyalFlush === false;
+    handIsRoyalFlush    === false;
 
   const checkForFourOfAKind =
-    handIsFourOfAKind === true &&
+    handIsFourOfAKind   === true &&
     handIsStraightFlush === false &&
-    handIsRoyalFlush === false;
+    handIsRoyalFlush    === false;
 
   const checkForFullHouse =
-    handIsFullHouse === true &&
-    handIsFourOfAKind === false &&
+    handIsFullHouse     === true &&
+    handIsFourOfAKind   === false &&
     handIsStraightFlush === false &&
-    handIsRoyalFlush === false;
+    handIsRoyalFlush    === false;
 
   const checkForFlush =
-    handIsFlush === true &&
-    handIsFullHouse === false &&
-    handIsFourOfAKind === false &&
+    handIsFlush         === true &&
+    handIsFullHouse     === false &&
+    handIsFourOfAKind   === false &&
     handIsStraightFlush === false &&
-    handIsRoyalFlush === false;
+    handIsRoyalFlush    === false;
 
   const checkForStraight =
-    handIsStraight === true &&
-    handIsFlush === false &&
-    handIsFullHouse === false &&
-    handIsFourOfAKind === false &&
+    handIsStraight      === true &&
+    handIsFlush         === false &&
+    handIsFullHouse     === false &&
+    handIsFourOfAKind   === false &&
     handIsStraightFlush === false &&
-    handIsRoyalFlush === false;
+    handIsRoyalFlush    === false;
 
   const checkForThreeOfAKind =
-    handIsThreeOfAKind === true &&
-    handIsStraight === false &&
-    handIsFlush === false &&
-    handIsFullHouse === false &&
-    handIsFourOfAKind === false &&
+    handIsThreeOfAKind  === true &&
+    handIsStraight      === false &&
+    handIsFlush         === false &&
+    handIsFullHouse     === false &&
+    handIsFourOfAKind   === false &&
     handIsStraightFlush === false &&
-    handIsRoyalFlush === false;
+    handIsRoyalFlush    === false;
 
   const checkForTwoPair =
-    handIsTwoPair === true &&
-    handIsThreeOfAKind === false &&
-    handIsStraight === false &&
-    handIsFlush === false &&
-    handIsFullHouse === false &&
-    handIsFourOfAKind === false &&
+    handIsTwoPair       === true &&
+    handIsThreeOfAKind  === false &&
+    handIsStraight      === false &&
+    handIsFlush         === false &&
+    handIsFullHouse     === false &&
+    handIsFourOfAKind   === false &&
     handIsStraightFlush === false &&
-    handIsRoyalFlush === false;
+    handIsRoyalFlush    === false;
 
   const checkForPair =
-    handIsPair === true &&
-    handIsTwoPair === false &&
-    handIsThreeOfAKind === false &&
-    handIsStraight === false &&
-    handIsFlush === false &&
-    handIsFullHouse === false &&
-    handIsFourOfAKind === false &&
+    handIsPair          === true &&
+    handIsTwoPair       === false &&
+    handIsThreeOfAKind  === false &&
+    handIsStraight      === false &&
+    handIsFlush         === false &&
+    handIsFullHouse     === false &&
+    handIsFourOfAKind   === false &&
     handIsStraightFlush === false &&
-    handIsRoyalFlush === false;
+    handIsRoyalFlush    === false;
 
   const highCardHand =
-    handIsPair === false &&
-    handIsTwoPair === false &&
-    handIsThreeOfAKind === false &&
-    handIsStraight === false &&
-    handIsFlush === false &&
-    handIsFullHouse === false &&
-    handIsFourOfAKind === false &&
+    handIsPair          === false &&
+    handIsTwoPair       === false &&
+    handIsThreeOfAKind  === false &&
+    handIsStraight      === false &&
+    handIsFlush         === false &&
+    handIsFullHouse     === false &&
+    handIsFourOfAKind   === false &&
     handIsStraightFlush === false &&
-    handIsRoyalFlush === false;
+    handIsRoyalFlush    === false;
   
   let message = '';
   
-  if (handHasExtraCards === true && handHasDuplicateCards === true) {
+  if (handHasExtraCards && handHasDuplicateCards) {
     return message = 'Your deck has too many cards and as at least one duplicate card';
   }
-  if (handHasExtraCards === true) {
+  if (handHasExtraCards) {
     return message = 'Too many cards, can only have 5';
   }
-  if (handHasDuplicateCards === true) {
+  if (handHasDuplicateCards) {
    return message = 'Please remove duplicate card or cards from array';
-  } else if (handIsRoyalFlush === true) {
-    message = 'You have a Royal Flush';
-  } else if (checkForStraightFlush === true) {
-    message = 'You have a Straight Flush';
-  } else if (checkForFourOfAKind === true && handHasDuplicateCards == false) {
-    message = 'You have Four of a Kind';
-  } else if (checkForFullHouse === true && handHasDuplicateCards === false) {
-    message = 'You have a Full House';
-  } else if (checkForFlush === true) {
-    message = 'You have a Flush';
-  } else if (checkForStraight === true) {
-    message = 'You have a Straight';
-  } else if (checkForThreeOfAKind === true && handHasDuplicateCards == false) {
-    message = 'You have Three of a Kind';
-  } else if (checkForTwoPair === true && handHasDuplicateCards === false) {
-    message = 'You have Two Pair';
-  } else if (checkForPair === true && handHasDuplicateCards === false) {
-    message = 'You have a Pair';
-  } else if (highCardHand === true) {
-    message = 'You have a High Card hand';
+  } else if (handIsRoyalFlush) {
+     return message = 'You have a Royal Flush';
+  } else if (checkForStraightFlush) {
+    return message = 'You have a Straight Flush';
+  } else if (checkForFourOfAKind && !handHasDuplicateCards) {
+    return message = 'You have Four of a Kind';
+  } else if (checkForFullHouse && !handHasDuplicateCards) {
+    return message = 'You have a Full House';
+  } else if (checkForFlush) {
+    return message = 'You have a Flush';
+  } else if (checkForStraight) {
+    return message = 'You have a Straight';
+  } else if (checkForThreeOfAKind && !handHasDuplicateCards) {
+    return message = 'You have Three of a Kind';
+  } else if (checkForTwoPair && !handHasDuplicateCards) {
+    return message = 'You have Two Pair';
+  } else if (checkForPair && !handHasDuplicateCards) {
+    return message = 'You have a Pair';
+  } else if (highCardHand) {
+    return message = 'You have a High Card hand';
   }
-  
-  return message;
 }
