@@ -47,8 +47,5 @@ describe('Poker Hand Evaluator', () => {
      const hand = ['Qs', 'Js', 'As', '10s', 'Ks'];
      assert.deepEqual(application(hand), 'You have a Royal Flush');
    });
-  it('Checks for unique values in the hand array', () => {
-    const hand = ['Ac', 'Ad', 'Ac', 'As', '5d'];
-  });
 
 });
