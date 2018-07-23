@@ -17,7 +17,7 @@ describe('Poker Hand Evaluator', () => {
   });
   it('displays a message if there are duplicate cards and too many cards in array', () => {
     const hand = ['Qs', '7s', 'As', '10s', 'Qs', '5c'];
-    assert.deepEqual(application(hand), 'Your deck has too many cards and as at least one duplicate card');
+    assert.deepEqual(application(hand), 'Your deck has too many cards and has at least one duplicate card');
   });
   it('displays high hand message', () => {
     const hand = ['10c', 'Ad', '2h', '4s', '5d'];
