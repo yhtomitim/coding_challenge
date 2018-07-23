@@ -18,16 +18,6 @@ Hand: Kh Qh 6 h 2 h 9 h(Flush)
 
 */
 const helperFn = require('./helperFunctions');
-// commented out evaluatePokerHand invocation to remove
-// console.log statement in tests.Uncomment ln 27-30 to
-// use`node app.js` to view the hand type in terminal.two
-// const hand declarations on ln 27 and ln 28 for ease of
-// seeing the results change.
-
-// // const hand = ['Qs', 'Js', 'As', '10s', 'Ks', 'As'];
-// const hand = ['9s', 'Qs', '8s', '10s', 'Js'];
-// const displayHand = evaluatePokerHand(hand);
-// console.log(displayHand);
 
 function evaluatePokerHand(hand) {
   const handHasDuplicateCards = helperFn.findDuplicateCards(hand);
@@ -177,5 +167,16 @@ function evaluatePokerHand(hand) {
   }
   return message;
 }
+
+// commented out evaluatePokerHand invocation to remove
+// console.log statement in tests.Uncomment ln 177-180 to
+// use`node app.js` to view the hand type in terminal.two
+// const hand declarations on ln 177 and ln 178 for ease of
+// seeing the results change.
+
+// // const hand = ['Qs', 'Js', 'As', '10s', 'Ks', 'As'];
+// const hand = ['9s', 'Qs', '8s', '10s', 'Js'];
+// const displayHand = evaluatePokerHand(hand);
+// console.log(displayHand);
 
 module.exports = evaluatePokerHand;
