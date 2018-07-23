@@ -182,7 +182,7 @@ function evaluatePokerHand(hand) {
   let anyDuplicates = hand.filter((card, index, self) => {
     return index == self.indexOf(card);
   });
-  if (anyDuplicates.length > 0) {
+  if (anyDuplicates.length !== 5) {
     return console.log('Please remove duplicate card or cards from array');
   }
   // check for extra cards in array
