@@ -9,11 +9,11 @@ describe('Poker Hand Evaluator', () => {
   });
   it('Displays a message if too many cards in array', () => {
     const hand = ['Qs', 'Js', 'As', '10s', 'Ks'];
-    assert.deepEqual(application(hand), 'too many cards, can only have 5');
+    assert.deepEqual(application(hand), 'Too many cards, can only have 5');
   });
   it('Displays a message if there are duplicate cards in array', () => {
     const hand = ['Qs', 'Js', 'As', '10s', 'Ks'];
-    assert.deepEqual(application(hand), 'please remove duplicate card from array');
+    assert.deepEqual(application(hand), 'Please remove duplicate card or cards from array');
   });
   it('Displays high hand message', () => {
     const hand = ['10c', 'Ad', '2h', '4s', '5d'];
