@@ -176,19 +176,28 @@ function isRoyalFlush(straightFlush, straightKind) {
   }
   return doesExist;
 }
+function findDuplicateCards(hand) {
+  let doesExist = false;
+  let anyDuplicates = hand.filter((card, index, self) => {
+    return index !== self.indexOf(card);
+  });
+    if (anyDuplicates.length !== 0) {
+      doesExist = true;
+    }
+  return doesExist;
+}
+
+function checkNumberOfCards(hand) {
+  let tooManyCards = false;
+  if (hand.length !== 5) {
+    tooManyCards = true;
+  }
+  return tooManyCards;
+}
 
 function evaluatePokerHand(hand) {
-  //check for duplicates in array
-  let anyDuplicates = hand.filter((card, index, self) => {
-    return index == self.indexOf(card);
-  });
-  if (anyDuplicates.length !== 5) {
-    return console.log('Please remove duplicate card or cards from array');
-  }
-  // check for extra cards in array
-  if (hand.length !== 5) {
-    return console.log('Too many cards, can only have 5');
-  }
+  const handHasDuplicateCards = findDuplicateCards(hand);
+  const handHasExtraCards = checkNumberOfCards(hand);
 
   const reducedHand = hand.reduce((object, currentCard) => {
     const cardRankOnly = currentCard.slice(0, currentCard.length - 1);
@@ -204,7 +213,6 @@ function evaluatePokerHand(hand) {
     }
     return object;
   }, {});
-
 
   const handIsPair = isAPair(reducedHand);
   const handIsTwoPair = isTwoPair(reducedHand);
@@ -289,36 +297,36 @@ function evaluatePokerHand(hand) {
     handIsRoyalFlush === false;
   
   let message = '';
-
-  if (handIsRoyalFlush === true) {
+  
+  if (handHasExtraCards === true && handHasDuplicateCards === true) {
+    return message = 'Your deck has too many cards and as at least one duplicate card';
+  }
+  if (handHasExtraCards === true) {
+    return message = 'Too many cards, can only have 5';
+  }
+  if (handHasDuplicateCards === true) {
+   return message = 'Please remove duplicate card or cards from array';
+  } else if (handIsRoyalFlush === true) {
     message = 'You have a Royal Flush';
-  }
-  if (checkForStraightFlush === true) {
+  } else if (checkForStraightFlush === true) {
     message = 'You have a Straight Flush';
-  }
-  if (checkForFourOfAKind === true) {
+  } else if (checkForFourOfAKind === true && handHasDuplicateCards == false) {
     message = 'You have Four of a Kind';
-  }
-  if (checkForFullHouse === true) {
+  } else if (checkForFullHouse === true && handHasDuplicateCards === false) {
     message = 'You have a Full House';
-  }
-  if (checkForFlush === true) {
+  } else if (checkForFlush === true) {
     message = 'You have a Flush';
-  }
-  if (checkForStraight === true) {
+  } else if (checkForStraight === true) {
     message = 'You have a Straight';
-  }
-  if (checkForThreeOfAKind === true) {
+  } else if (checkForThreeOfAKind === true && handHasDuplicateCards == false) {
     message = 'You have Three of a Kind';
-  }
-  if (checkForTwoPair === true) {
+  } else if (checkForTwoPair === true && handHasDuplicateCards === false) {
     message = 'You have Two Pair';
-  }
-  if (checkForPair === true) {
+  } else if (checkForPair === true && handHasDuplicateCards === false) {
     message = 'You have a Pair';
-  }
-  if (highCardHand === true) {
+  } else if (highCardHand === true) {
     message = 'You have a High Card hand';
   }
+  
   return message;
 }
