@@ -17,7 +17,12 @@ Hand: Kh Kc 3 s 3 h 2 d(2 Pair)
 Hand: Kh Qh 6 h 2 h 9 h(Flush)
 
 */
-evaluatePokerHand(['10c', 'Ad', '2h', '4s', '5d']);
+
+module.exports = evaluatePokerHand;
+
+// const hand = ['Qs', 'Js', 'As', '10s', 'Ks'];
+// // const hand = ['9s', 'Qs', '8s', '10s', 'Js'];
+// evaluatePokerHand(hand);
 
 function isAPair(obj) {
   let doesExist = false;
@@ -71,6 +76,7 @@ function isAStraight(obj) {
   Object.keys(obj).forEach(cardRank => {
     rankString += cardRank;
   });
+  rankString.replace()
   if (rankString.length === 5 || rankString.length === 6) {
     const sixHigh = /23456/;
     const sevenHigh = /34567/;
@@ -78,9 +84,9 @@ function isAStraight(obj) {
     const nineHigh = /56789/;
     const tenHigh = /678910/;
     const jackHigh = /78910J/;
-    const queenHigh = /8910JQ/;
-    const kingHigh = /910JQK/;
-    const aceHigh = /10JAQK/;
+    const queenHigh = /8910[JQ][QJ]/;
+    const kingHigh = /910[JQK][JQK][JQK]/;
+    const aceHigh = /10[QJKA][JQKA][JKQA][JQKA]/;
 
     if (sixHigh.test(rankString)) {
       doesExist = true;
@@ -176,7 +182,7 @@ function isRoyalFlush(straightFlush, straightKind) {
 function evaluatePokerHand(hand) {
   const reducedHand = hand.reduce((object, currentCard) => {
     const cardRankOnly = currentCard.slice(0, currentCard.length - 1);
-    const cardSuit = currentCard.slice(-1)
+    const cardSuit = currentCard.slice(-1);
     if (!object[cardRankOnly]) {
       object[cardRankOnly] = {
         count: 1,
@@ -270,35 +276,48 @@ function evaluatePokerHand(hand) {
     handIsFourOfAKind === false &&
     handIsStraightFlush === false &&
     handIsRoyalFlush === false;
+  
+  let message = '';
 
   if (handIsRoyalFlush === true) {
     console.log('You have a Royal Flush');
+    message = 'You have a Royal Flush';
   }
   if (checkForStraightFlush === true) {
     console.log('You have a Straight Flush');
+    message = 'You have a Straight Flush';
   }
   if (checkForFourOfAKind === true) {
-    console.log('You have Four Of A Kind');
+    console.log('You have Four of a Kind');
+    message = 'You have Four of a Kind';
   }
   if (checkForFullHouse === true) {
     console.log('You have a Full House');
+    message = 'You have a Full House';
   }
   if (checkForFlush === true) {
     console.log('You have a Flush');
+    message = 'You have a Flush';
   }
   if (checkForStraight === true) {
     console.log('You have a Straight');
+    message = 'You have a Straight';
   }
   if (checkForThreeOfAKind === true) {
     console.log('You have Three of a Kind');
+    message = 'You have Three of a Kind';
   }
   if (checkForTwoPair === true) {
     console.log('You have Two Pair');
+    message = 'You have Two Pair';
   }
   if (checkForPair === true) {
     console.log('You have a Pair');
+    message = 'You have a Pair';
   }
   if (highCardHand === true) {
     console.log('You have a High Card hand');
+    message = 'You have a High Card hand';
   }
+  return message;
 }
