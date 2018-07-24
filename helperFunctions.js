@@ -1,24 +1,10 @@
-module.exports = {
-  isAPair,
-  isTwoPair,
-  isThreeOfAKind,
-  isAStraight,
-  isAFlush,
-  isFullHouse,
-  isFourOfAKind,
-  isStraightFlush,
-  isRoyalFlush,
-  findDuplicateCards,
-  checkNumberOfCards,
-};
-
 function isAPair(obj) {
   let doesExist = false;
   let counter = 0;
-  Object.keys(obj).forEach(cardRank => {
-    Object.values(obj[cardRank]).forEach(value => {
+  Object.keys(obj).forEach((cardRank) => {
+    Object.values(obj[cardRank]).forEach((value) => {
       if (value === 2) {
-        counter++;
+        counter += 1;
       }
     });
     if (counter === 1) {
@@ -31,10 +17,10 @@ function isAPair(obj) {
 function isTwoPair(obj) {
   let doesExist = false;
   let counter = 0;
-  Object.keys(obj).forEach(cardRank => {
-    Object.values(obj[cardRank]).forEach(value => {
+  Object.keys(obj).forEach((cardRank) => {
+    Object.values(obj[cardRank]).forEach((value) => {
       if (value === 2) {
-        counter++;
+        counter += 1;
       }
     });
     if (counter === 2) {
@@ -46,8 +32,8 @@ function isTwoPair(obj) {
 
 function isThreeOfAKind(obj) {
   let doesExist = false;
-  Object.keys(obj).forEach(cardRank => {
-    Object.values(obj[cardRank]).forEach(value => {
+  Object.keys(obj).forEach((cardRank) => {
+    Object.values(obj[cardRank]).forEach((value) => {
       if (value === 3) {
         doesExist = true;
       }
@@ -61,7 +47,7 @@ function isAStraight(obj) {
   let rankString = '';
   let straightHighRank = '';
 
-  Object.keys(obj).forEach(cardRank => {
+  Object.keys(obj).forEach((cardRank) => {
     rankString += cardRank;
   });
   if (rankString.length === 5 || rankString.length === 6) {
@@ -118,14 +104,13 @@ function isAStraight(obj) {
 function isAFlush(obj) {
   let doesExist = false;
   let handSuit = '';
-  Object.keys(obj).forEach(cardRank => {
-    Object.values(obj[cardRank]).forEach(value => {
+  Object.keys(obj).forEach((cardRank) => {
+    Object.values(obj[cardRank]).forEach((value) => {
       if (value === 's' || value === 'd' || value === 'c' || value === 'h') {
         handSuit += value;
       }
     });
-    if (handSuit === 'sssss' || handSuit === 'ddddd' || handSuit === 'ccccc' || handSuit === 'hhhhh')
-      doesExist = true;
+    if (handSuit === 'sssss' || handSuit === 'ddddd' || handSuit === 'ccccc' || handSuit === 'hhhhh') { doesExist = true; }
   });
   return doesExist;
 }
@@ -140,8 +125,8 @@ function isFullHouse(pair, threeKind) {
 
 function isFourOfAKind(obj) {
   let doesExist = false;
-  Object.keys(obj).forEach(cardRank => {
-    Object.values(obj[cardRank]).forEach(value => {
+  Object.keys(obj).forEach((cardRank) => {
+    Object.values(obj[cardRank]).forEach((value) => {
       if (value === 4) {
         doesExist = true;
       }
@@ -168,9 +153,7 @@ function isRoyalFlush(straightFlush, straightKind) {
 
 function findDuplicateCards(hand) {
   let doesExist = false;
-  let anyDuplicates = hand.filter((card, index, self) => {
-    return index !== self.indexOf(card);
-  });
+  const anyDuplicates = hand.filter((card, index, self) => index !== self.indexOf(card));
   if (anyDuplicates.length !== 0) {
     doesExist = true;
   }
@@ -184,3 +167,17 @@ function checkNumberOfCards(hand) {
   }
   return tooManyCards;
 }
+
+module.exports = {
+  isAPair,
+  isTwoPair,
+  isThreeOfAKind,
+  isAStraight,
+  isAFlush,
+  isFullHouse,
+  isFourOfAKind,
+  isStraightFlush,
+  isRoyalFlush,
+  findDuplicateCards,
+  checkNumberOfCards,
+};
