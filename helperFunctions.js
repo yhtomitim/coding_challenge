@@ -110,7 +110,9 @@ function isAFlush(obj) {
         handSuit += value;
       }
     });
-    if (handSuit === 'sssss' || handSuit === 'ddddd' || handSuit === 'ccccc' || handSuit === 'hhhhh') { doesExist = true; }
+    if (handSuit === 'sssss' || handSuit === 'ddddd' || handSuit === 'ccccc' || handSuit === 'hhhhh') {
+      doesExist = true;
+    }
   });
   return doesExist;
 }
