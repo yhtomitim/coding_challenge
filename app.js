@@ -114,7 +114,7 @@ function evaluatePokerHand(hand) {
   let message = '';
 
   if (handHasExtraCards && handHasDuplicateCards) {
-    message = 'Your deck has too many cards and as at least one duplicate card';
+    message = 'Your deck has too many cards and has at least one duplicate card';
     return message;
   }
   if (handHasExtraCards) {
@@ -174,9 +174,10 @@ function evaluatePokerHand(hand) {
 // const hand declarations on ln 177 and ln 178 for ease of
 // seeing the results change.
 
-// // const hand = ['Qs', 'Js', 'As', '10s', 'Ks', 'As'];
+// const hand = ['Qs', 'Js', 'As', '10s', 'Ks', 'As'];
 // const hand = ['9s', 'Qs', '8s', '10s', 'Js'];
-// const displayHand = evaluatePokerHand(hand);
-// console.log(displayHand);
+const hand = ['10s', '10h', '10c', '10d', '2s'];
+const displayHand = evaluatePokerHand(hand);
+console.log(displayHand);
 
 module.exports = evaluatePokerHand;
